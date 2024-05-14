@@ -34,8 +34,30 @@ public class HousesRepository
     string sql = @"
       INSERT INTO
       houses(
-        
+        bedrooms,
+        bathrooms,
+        levels,
+        price,
+        imgUrl,
+        description,
+        year,
+        creatorId
       )
-      ";
+      VALUES(
+        @Bedrooms,
+        @Bathrooms,
+        @Levels,
+        @Price,
+        @ImgUrl,
+        @Description,
+        @Year,
+        @CreatorId
+      );
+
+      SELECT * FROM houses WHERE id = LAST_INSERT_ID();";
+
+    House house = _db.Query<House>(sql, houseData).FirstOrDefault();
+
+    return house;
   }
 }
