@@ -1,5 +1,6 @@
 
 
+
 namespace csharp_gregslist_api.Repositories;
 
 public class HousesRepository
@@ -57,6 +58,25 @@ public class HousesRepository
       SELECT * FROM houses WHERE id = LAST_INSERT_ID();";
 
     House house = _db.Query<House>(sql, houseData).FirstOrDefault();
+
+    return house;
+  }
+
+  internal House GetHouseById(int houseId)
+  {
+    string sql = @"
+      SELECT
+      houses.*,
+      accounts.*
+      FROM houses
+      JOIN accounts ON accounts.id = houses.creatorId
+      WHERE houses.id = @houseId;";
+
+    House house = _db.Query<House, Account, House>(sql, (house, account) =>
+    {
+      house.Creator = account;
+      return house;
+    }, new { houseId }).FirstOrDefault();
 
     return house;
   }
