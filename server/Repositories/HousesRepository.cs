@@ -1,6 +1,7 @@
 
 
 
+
 namespace csharp_gregslist_api.Repositories;
 
 public class HousesRepository
@@ -77,6 +78,32 @@ public class HousesRepository
       house.Creator = account;
       return house;
     }, new { houseId }).FirstOrDefault();
+
+    return house;
+  }
+
+  internal House UpdateHouse(House houseToUpdate)
+  {
+    string sql = @"
+      UPDATE houses
+      SET
+      bedrooms = @Bedrooms,
+      bathrooms = @Bathrooms,
+      levels = @Levels
+      WHERE id = @Id;
+      
+      SELECT
+      houses.*,
+      accounts.*
+      FROM houses
+      JOIN accounts ON accounts.id = houses.creatorId
+      WHERE houses.id = @Id;";
+
+    House house = _db.Query<House, Account, House>(sql, (house, account) =>
+    {
+      house.Creator = account;
+      return house;
+    }, houseToUpdate).FirstOrDefault();
 
     return house;
   }

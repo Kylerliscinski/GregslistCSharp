@@ -36,4 +36,22 @@ public class HousesService
 
     return house;
   }
+
+  internal House UpdateHouse(int houseId, string userId, House houseData)
+  {
+    House houseToUpdate = GetHouseById(houseId);
+
+    if (houseToUpdate.CreatorId != userId)
+    {
+      throw new Exception("You cannot delete a post that is not yours");
+    }
+
+    houseToUpdate.Bedrooms = houseData.Bedrooms ?? houseToUpdate.Bedrooms;
+    houseToUpdate.Bathrooms = houseData.Bathrooms ?? houseToUpdate.Bathrooms;
+    houseToUpdate.Levels = houseData.Levels ?? houseToUpdate.Levels;
+
+    House updatedHouse = _repository.UpdateHouse(houseToUpdate);
+
+    return updatedHouse;
+  }
 }
