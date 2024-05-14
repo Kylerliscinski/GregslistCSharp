@@ -1,0 +1,13 @@
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft": "Warning",
+      "Microsoft.Hosting.Lifetime": "Information"
+    }
+  },
+  "AllowedHosts": "*",
+  "CONNECTION_STRING": "mongodb+srv://kylerliscinski:Neveralone15!@greenpath.9j9leb3.mongodb.net/",
+  "AUTH0_DOMAIN": "dev-igepbtkmc1ba5lje.us.auth0.com",
+  "AUTH0_AUDIENCE": "https://houses.com"
+}
